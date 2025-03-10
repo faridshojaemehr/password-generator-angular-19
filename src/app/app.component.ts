@@ -21,7 +21,7 @@ export class AppComponent {
       id: 'letters',
       name: 'Use Letters',
       status: false,
-      value: 'abcdefghijklmnopqrstuvwyz',
+      value: 'abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWYZ',
     },
   ]);
 
@@ -54,10 +54,25 @@ export class AppComponent {
     );
 
     let generatedPassword = '';
-    for (let i = 0; i < this.length(); i++) {
+    // First, ensure at least one character from each selected category
+    this.characterOptions().forEach((option) => {
+      if (option.status && option.value.length > 0) {
+        const randomIndex = Math.floor(Math.random() * option.value.length);
+        generatedPassword += option.value[randomIndex];
+      }
+    });
+
+    // Fill the rest with random characters from all valid chars
+    while (generatedPassword.length < this.length()) {
       const index = Math.floor(Math.random() * validChars.length);
       generatedPassword += validChars[index];
     }
+
+    // Shuffle the password to make it more random
+    generatedPassword = generatedPassword
+      .split('')
+      .sort(() => Math.random() - 0.5)
+      .join('');
     this.password.set(generatedPassword);
   }
 

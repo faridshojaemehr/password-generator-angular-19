@@ -15,10 +15,11 @@
       />
     </div>
     @for (item of characterOptions(); track $index) {
-    <div class="flex items-center gap-2" (click)="onChangeItemStatus(item)">
+    <div class="flex items-center gap-2">
       <label class="flex items-center cursor-pointer relative">
         <input
           [checked]="item.status"
+          (change)="onChangeItemStatus(item)"
           type="checkbox"
           class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow-sm border border-slate-200 checked:bg-slate-800 checked:border-slate-800"
           id="checkbox-with-link"
